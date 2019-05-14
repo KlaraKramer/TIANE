@@ -25,13 +25,17 @@ def get_inhalt(txt, tiane):
         satz[ind] = w
         ind += 1
     for index, word in satz.items():
-        if word.lower() == 'sag' or word.lower() == 'sage': 
+        if word.lower() == 'sag' or word.lower() == 'sage':
             sag_ind = index
             break
-    if sag_ind != 500: 
+    if sag_ind != 500:
         nutzer = satz.get(sag_ind + 1)
         vorhandene_nutzer = tiane.local_storage.get('users')
-        if nutzer in vorhandene_nutzer.keys():
+        vn = ''
+        for nr in vorhandene_nutzer.keys():
+            vn = vn + nr
+        vn = vn.lower()
+        if nutzer in vn:
             nutzer = nutzer
             start_index = sag_ind + 2
         else:
@@ -69,6 +73,7 @@ def get_inhalt(txt, tiane):
                     inhalt = inhalt
                     break
     i_und_n = [inhalt, nutzer]
+    print(i_und_n)
     return i_und_n
 
 def get_aufruf(text, tiane):
@@ -122,8 +127,8 @@ def handle(text, tiane, profile):
             else:
                 zweite_antwort = random.choice([tiane.user + ' ist gerade im ' + raum, tiane.user + ' ist momentan im ' + raum])
             tiane.say(zweite_antwort, user = nutzer)
-            
-                    
+
+
 
 def isValid(txt):
     tt = txt.replace('.', (''))
@@ -161,13 +166,13 @@ class Tiane:
     def listen(self):
         neuertext = input()
         return neuertext
-        
+
 
 def main():
     profile = {}
     tiane = Tiane()
-    handle('Sag Ferdi Bescheid dass er zu mir in die Küche kommen soll', tiane, profile)
-    
-    
+    handle('Sag Ferdi, dass er aufräumen soll!', tiane, profile)
+
+
 if __name__ == "__main__":
     main()
